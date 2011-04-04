@@ -1,0 +1,57 @@
+<html>
+	<head>
+		<link rel="stylesheet" href="stylesheet.css">
+	</head>
+	<body>
+		<div id="status"></div>
+		<form>
+			<input name="input" value="" id="input" placeholder="skriv ett meddelande..." />
+			<input type="submit" name="send" value="Skicka">
+		</form>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="http://localhost:8080/socket.io/socket.io.js"></script> 
+		<script>
+			//	Read socket.io API here:
+			//	http://labs.learnboost.com/socket.io/
+			var socket = new io.Socket("localhost", {
+				port: 8080
+			}); 
+			socket.connect();
+			socket.on('connect', function(){
+				log('Du &auml;r ANSLUTEN!')
+			});
+			socket.on('message', function(message){
+				if(message.announcement){
+					log('Announcement: ' + message.announcement)
+				}
+				else if(message.message){
+					log('Meddelande: ' + message.message)
+				}
+				
+				console.log(message)
+			});
+			socket.on('disconnect', function(){
+				log('Du kopplades fr&aring;n. =(')
+			}); 
+			
+			function log(message){
+				/*
+				if(typeof console == 'object'){
+					console.log(message)
+				}
+				*/
+				$('#status').append(message + '<br/>');
+				//console.log(message);
+			}
+			
+			$('form').submit(function(){
+				var message = $('form input#input').val();
+				socket.send(message)
+				log('Du skrev: ' + message);
+				$('form input#input').val('');
+				
+				return false;
+			});
+		</script> 
+	</body>
+</html>
