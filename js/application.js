@@ -22,6 +22,10 @@ var myName = 'Du';
 		}
 		
 		if (Modernizr.canvas) {
+			
+			$('#connection_graph').append('<canvas id="viewport" width="' + window.screen.availWidth + '" height="' + window.screen.availHeight + '"></canvas>');
+			//document.write('<script src="js/jquery-ui-1.8.10.min.js">\x3C/script>');
+			
 			// Using Arbor.js	http://arborjs.org/reference
 			sys = arbor.ParticleSystem(1000, 600, 0.5); // create the system with sensible repulsion/stiffness/friction
 			sys.parameters({
@@ -192,7 +196,7 @@ var myName = 'Du';
 	}
 	
 	function handleSocketIO(){
-		socket = new io.Socket("localhost", {
+		socket = new io.Socket("amanda.local", {
 			port: 8080
 		});
 		socket.connect();
