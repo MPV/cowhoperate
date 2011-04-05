@@ -48,6 +48,10 @@ form.new input[type=submit]{
 	margin-top: 1em;
 }
 
+form.new .connection{
+	
+}
+
 form.new .connection .buttons{
 	display: inline-block;
 	min-width: 70px;
