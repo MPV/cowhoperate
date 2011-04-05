@@ -11,34 +11,67 @@ server.listen(8080);
   
 // socket.io 
 var socket = io.listen(server); 
+
+var nodes = [
+	{name: "Ludde"},
+	{name: "Nisse"},
+	{name: "Pelle"},
+	{name: "Ola"}
+];
+var edges = [
 /*
-socket.on('connection', function(client){ 
-	// new client is here! 
-	sys.log('Client connected.')
-	
-	client.on('message', function(){ 
-		sys.log('Message from client...')
-	}) 
-	
-	client.on('disconnect', function(){ 
-		sys.log('Client disconnected.')
-	}) 
-}); 
+	{
+		source: {
+			name: "Du"
+		}, 
+		target: {
+			name: "Nisse"
+		}, 
+	}
 */
-var buffer = [];
+];
+
+//var buffer = [];
 socket.on('connection', function(client){
-    client.send({ buffer: buffer });
-    client.broadcast({ announcement: client.sessionId + ' anslöt' });
+    
+	client.send({ 
+		//buffer: buffer, 
+		nodes: nodes, 
+		edges: edges
+	});
+	
+    client.broadcast({ announcement: 'Någon anslöt.'});//' (' + client.sessionId + ')' });
 
     client.on('message', function(message){
-        var msg = { message: [client.sessionId, message] };
-        buffer.push(msg);
-        if (buffer.length > 15) buffer.shift();
+		//var msg = {
+		//	message: [
+		//		client.sessionId, 
+		//		message
+		//	] 
+		//};
+		
+		if(/*message.nodes || */message.edges){
+			/*if(message.nodes){
+				nodes = message.nodes;
+			}*/
+			if(message.edges){
+				edges = message.edges;
+			}
+			msg = {
+				//nodes: nodes, 
+				edges: edges
+			};
+		}
+		//else{
+		//	buffer.push(msg);
+	    //    if (buffer.length > 15) buffer.shift();
+		//	sys.log(msg.message);
+		//}
         client.broadcast(msg);
-		sys.log(msg.message);
     });
 
     client.on('disconnect', function(){
-        client.broadcast({ announcement: client.sessionId + ' kopplade från' });
+        client.broadcast({ announcement: 'Någon kopplade från.'});// (' + client.sessionId + ')' });
     });
+
 });

@@ -1,0 +1,85 @@
+html, body{
+	
+}
+
+body{
+	font-family: sans-serif;
+}
+
+#wrapper{
+	margin: 70px auto 0 auto;
+	width: 900px;
+}
+
+.event_info{
+	font-size: 24px;
+	margin-bottom: 1em;
+}
+
+.event_info .event_name{
+	font-style: italic;
+}
+
+form.new{
+	float: left;
+	font-size: 24px;
+	width: 500px;
+}
+
+form.new label{
+	font-size: 18px;
+}
+
+form.new input, form.new select, form.new option, form.new textarea, form.new button{
+	font-size: 24px;
+}
+
+form.new input[type=submit]{
+	margin-top: 1em;
+}
+
+form.new .connection .buttons{
+	display: inline-block;
+	min-width: 70px;
+	text-align: right;
+}
+
+form.new .connection .buttons a{
+	background: #eee;
+	border-radius: 7px;
+	color: #333;
+	display: inline-block;
+	padding: 1px 10px;
+	text-decoration: none;
+}
+
+form.new .connection .buttons a:hover{
+	background: #ddd;
+}
+
+form.new .connection:first-child .buttons .remove{
+	display: none;
+}
+
+form.new > .buttons{
+/*	text-align: right;*/
+}
+
+#connection_graph{
+	color: #999;
+	float: right;
+	width: 350px;
+}
+
+#connection_graph h3{
+	font-weight: normal;
+}
+
+
+#connection_graph canvas{
+/*	background: #f9f9f9;*/
+	border: 1px solid #eee;
+/*	height: 200px;
+	width: 400px;
+*/
+}

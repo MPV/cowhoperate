@@ -1,57 +1,64 @@
+<!doctype html>
 <html>
 	<head>
-		<link rel="stylesheet" href="stylesheet.css">
+		<meta charset="utf-8" />
+		<meta http-equiv="content-language" content="sv" />
+		<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/themes/ui-lightness/jquery-ui.css" type="text/css" media="screen" charset="utf-8">
+		<link rel="stylesheet" href="css/application.css" type="text/css" media="screen" title="Stylesheet" charset="utf-8">
+		<link rel="stylesheet" href="css/tipsy.css" type="text/css" media="screen" title="Stylesheet" charset="utf-8">
+		<script src="js/modernizr-1.7.min.js" type="text/javascript" charset="utf-8"></script>
+		<!-- Enable HTML5 tags in IE < 9: -->
+		<!--[if lt IE 9]>
+		<script src="js/excanvas.compiled.js"></script>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
 	</head>
 	<body>
-		<div id="status"></div>
-		<form>
-			<input name="input" value="" id="input" placeholder="skriv ett meddelande..." />
-			<input type="submit" name="send" value="Skicka">
-		</form>
+		<div id="wrapper">
+			<form class="new">
+				<h2 class="event_info">
+					I händelse av en
+					<span class="event_name">_________</span>
+				</h2>
+				<div id="connections">
+					<div class="connection">
+						<span class="field media">
+							<label>...</label>
+							<select name="media[]" id="media[]" autofocus="true">
+								<option>ringer</option>
+								<option>mejlar</option>
+								<option>träffar</option>
+							</select>
+						</span>
+						<span class="field contact">
+							<label for="contact[]">jag</label>
+							<input type="text" name="contact[]" value="" id="contact[]" placeholder="skriv/sök aktör" />
+						</span>
+						<span class="buttons">
+							<a class="remove" href="#" title="Ta bort">-</a>
+							<a class="add" href="#" title="Lägg till fler...">+</a>
+						</span>
+					</div>
+				</div>
+				<div class="buttons">
+					<input type="submit" value="Spara" />
+				</div>
+			</form>
+			<div id="connection_graph">
+				<h3>Ditt nätverk:</h3>
+				
+				<canvas id="viewport" width="350" height="350"></canvas>
+			</div>
+			<div id="status" style="clear: both;"></div>
+		</div>
+		
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js" type="text/javascript" charset="utf-8"></script>
-		<script src="http://localhost:8080/socket.io/socket.io.js"></script> 
-		<script>
-			//	Read socket.io API here:
-			//	http://labs.learnboost.com/socket.io/
-			var socket = new io.Socket("localhost", {
-				port: 8080
-			}); 
-			socket.connect();
-			socket.on('connect', function(){
-				log('Du &auml;r ANSLUTEN!')
-			});
-			socket.on('message', function(message){
-				if(message.announcement){
-					log('Announcement: ' + message.announcement)
-				}
-				else if(message.message){
-					log('Meddelande: ' + message.message)
-				}
-				
-				console.log(message)
-			});
-			socket.on('disconnect', function(){
-				log('Du kopplades fr&aring;n. =(')
-			}); 
-			
-			function log(message){
-				/*
-				if(typeof console == 'object'){
-					console.log(message)
-				}
-				*/
-				$('#status').append(message + '<br/>');
-				//console.log(message);
-			}
-			
-			$('form').submit(function(){
-				var message = $('form input#input').val();
-				socket.send(message)
-				log('Du skrev: ' + message);
-				$('form input#input').val('');
-				
-				return false;
-			});
-		</script> 
+		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/arbor.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/arbor.graphics.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery.tipsy.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/arbor-renderer.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/application.js" type="text/javascript" charset="utf-8"></script>
+		<script src="http://localhost:8080/socket.io/socket.io.js"></script>
 	</body>
 </html>
